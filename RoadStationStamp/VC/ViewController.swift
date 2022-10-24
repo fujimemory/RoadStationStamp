@@ -45,6 +45,9 @@ class ViewController: UIViewController,
     // ユーザーの位置情報を取得する変数
     var userLocation :CLLocationCoordinate2D?
     
+    // ユーザーの位置情報の取得状況
+    var isUserLocation : Bool = false
+    
     // 地図の拡大率　（0〜1）
     // 数値が0に近づくほど拡大率が上がる
     var span = MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0)
@@ -58,7 +61,7 @@ class ViewController: UIViewController,
         
        
     
-        locationButton.isHidden = true
+//        locationButton.isHidden = true
         
         //userdefaults 配列呼び出し
         if let unwrapedStations = loadStationsArray(){ //UserDefaultsにデータがあれば（nilでないとき）
@@ -152,8 +155,9 @@ class ViewController: UIViewController,
 
     //MARK: - デリゲートメソッド
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if locations.last?.coordinate != nil {
-            self.locationButton.isHidden = true
+        if locations.last?.coordinate != nil {// 現在地が取得できたら
+//            self.locationButton.isHidden = true
+            self.isUserLocation = true
         }
         
         self.userLocation = locations.last?.coordinate
@@ -161,8 +165,10 @@ class ViewController: UIViewController,
         
     }
     
+    //位置情報が取得できなかった時の処理
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.locationButton.isHidden = false
+//        self.locationButton.isHidden = false
+        self.isUserLocation = false
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -243,8 +249,12 @@ class ViewController: UIViewController,
     
     @IBAction func locationBtnTapped(_ sender: UIButton) {
         print("位置情報切り替えボタン")
-
-        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            
+        if self.isUserLocation {// 位置情報が取得できたらuserlocationを画面中央に表示する機能
+            mapView.setUserTrackingMode(.follow, animated: true)
+        }else {// 位置情報が取得できなければアラートを介して設定アプリへの遷移
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+        }
       
     }
     
