@@ -253,7 +253,20 @@ class ViewController: UIViewController,
         if self.isUserLocation {// 位置情報が取得できたらuserlocationを画面中央に表示する機能
             mapView.setUserTrackingMode(.follow, animated: true)
         }else {// 位置情報が取得できなければアラートを介して設定アプリへの遷移
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+//            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            let alert = UIAlertController(title: "位置情報の設定をオンにします", message: nil, preferredStyle: .alert)
+            //ここから追加
+            let toSettingApp = UIAlertAction(title: "設定へ", style: .default) { (action) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }
+            
+            let stay = UIAlertAction(title: "オフのままにする", style: .default) { (action) in
+                
+            }
+            alert.addAction(toSettingApp)
+            alert.addAction(stay)
+            //ここまで追加
+            present(alert, animated: true, completion: nil)
         }
       
     }
