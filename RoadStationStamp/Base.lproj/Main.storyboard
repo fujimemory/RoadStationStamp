@@ -25,7 +25,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZl-gD-gxv">
                                 <rect key="frame" x="16" y="54" width="66" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -34,12 +34,21 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeS-cv-QLn">
                                 <rect key="frame" x="309" y="444" width="50" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="location.fill" catalog="system" cornerStyle="large">
-                                    <backgroundConfiguration key="background"/>
-                                </buttonConfiguration>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="figure.wave" catalog="system"/>
                                 <connections>
                                     <action selector="locationBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="L3P-cC-VBP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJB-Nv-v4f">
+                                <rect key="frame" x="310" y="496" width="51" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="map" catalog="system"/>
+                                <connections>
+                                    <action selector="mapTypeBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CLG-CV-WYf"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -50,6 +59,7 @@
                     <connections>
                         <outlet property="achievementLabel" destination="XZl-gD-gxv" id="sUz-HY-b7k"/>
                         <outlet property="locationButton" destination="qeS-cv-QLn" id="QJf-56-lbM"/>
+                        <outlet property="mapTypeBtn" destination="mJB-Nv-v4f" id="WlN-Et-InI"/>
                         <outlet property="mapView" destination="21I-Rf-Ua5" id="vZp-uB-TDW"/>
                     </connections>
                 </viewController>
@@ -371,13 +381,17 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.forward" catalog="system" width="97" height="128"/>
-        <image name="location.fill" catalog="system" width="128" height="119"/>
+        <image name="figure.wave" catalog="system" width="80" height="128"/>
+        <image name="map" catalog="system" width="128" height="112"/>
         <image name="mappin.circle" catalog="system" width="128" height="123"/>
         <image name="network" catalog="system" width="128" height="123"/>
         <image name="safari" catalog="system" width="128" height="123"/>
         <image name="stamp.jpg" width="806" height="811.08001708984375"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

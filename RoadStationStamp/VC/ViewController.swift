@@ -27,6 +27,7 @@ class ViewController: UIViewController,
     
     @IBOutlet var locationButton: UIButton!
     
+    @IBOutlet var mapTypeBtn: UIButton!
     //userdefaultsから読み込んだ配列を格納する変数
     var stations : [RoadStation] = []
     
@@ -53,7 +54,7 @@ class ViewController: UIViewController,
     var span = MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0)
     
    
-    
+    var mapType : MKMapType = .standard
   //MARK: - Viewの表示時の処理
     
     override func viewDidLoad() {
@@ -74,17 +75,7 @@ class ViewController: UIViewController,
         
         print("\(stations.filter{$0.area == "hokuriku"}.filter{$0.isStamp == true}.count) / \(stations.filter{$0.area == "hokuriku"}.count)")
         
-//         userdefaults 辞書型呼び出し
-//        if let unwrappedStationDic = loadStationsDictionary() {
-//            saveStationsDictionary(dictionary: unwrappedStationDic)
-//              stations2 = arrayFromDict(dictionary: unwrappedStationDic)
-//        }else {
-//            saveStationsDictionary(dictionary: zenkokuStationsDic)
-//            stations2 = arrayFromDict(dictionary: zenkokuStationsDic)
-//        }
-//
-//        print("stations2: \(stations2)")
-//
+
         
         // マネージャーの初期化
         myLocationManager = CLLocationManager()
@@ -111,6 +102,8 @@ class ViewController: UIViewController,
         
         achievementLabel.layer.cornerRadius = 10
         achievementLabel.clipsToBounds = true
+        
+        
         
  
        
@@ -257,6 +250,41 @@ class ViewController: UIViewController,
         }
       
     }
+    
+    
+    @IBAction func mapTypeBtnTapped(_ sender: UIButton) {
+        print("地図タイプ変更ダイアログ表示")
+        
+        let actionSheet = UIAlertController(title: "地図タイプの変更", message: nil, preferredStyle: .actionSheet)
+        
+        let action1 = UIAlertAction(title: "標準", style: .default) { action in
+            print("標準")
+            // 非推奨
+//            self.mapView.mapType = MKMapType.standard
+            self.mapView.preferredConfiguration = MKStandardMapConfiguration()
+            
+            
+        }
+        let action2 = UIAlertAction(title: "衛星画像", style: .default) { action in
+            print("ハイブリッド")
+            // 非推奨
+//            self.mapView.mapType = MKMapType.hybrid
+            self.mapView.preferredConfiguration = MKHybridMapConfiguration()
+            
+        }
+        let close = UIAlertAction(title: "閉じる", style: .destructive) { action in
+            print("閉じる")
+        }
+        
+        actionSheet.addAction(action1)
+        actionSheet.addAction(action2)
+        actionSheet.addAction(close)
+        
+        self.present(actionSheet, animated: true, completion: nil)
+        
+        
+    }
+    
     
 }//:ViewController
 
