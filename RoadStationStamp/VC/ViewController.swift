@@ -31,7 +31,6 @@ class ViewController: UIViewController,
     //userdefaultsから読み込んだ配列を格納する変数
     var stations : [RoadStation] = []
     
-//    var stations2 : [RoadStation] = []
     
    
     
@@ -52,17 +51,17 @@ class ViewController: UIViewController,
     // 地図の拡大率　（0〜1）
     // 数値が0に近づくほど拡大率が上がる
     var span = MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0)
-    
+ 
+    // ユーザピンを格納した変数
+    var userPinView : MKAnnotationView!
    
-    var mapType : MKMapType = .standard
-  //MARK: - Viewの表示時の処理
+      //MARK: - Viewの表示時の処理
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
        
     
-//        locationButton.isHidden = true
         
         //userdefaults 配列呼び出し
         if let unwrapedStations = loadStationsArray(){ //UserDefaultsにデータがあれば（nilでないとき）
@@ -90,15 +89,14 @@ class ViewController: UIViewController,
         
         if CLLocationManager.locationServicesEnabled() {
             print("せいこうしました")
-
+            myLocationManager.startUpdatingHeading()
             myLocationManager.startUpdatingLocation()
         }
-//        mapView.setCenter(mapView.userLocation.coordinate, animated: false)
         
+                // 現在地を画面中央にする
+        mapView.userTrackingMode = .follow
+
        
-    
-        // 現在地を画面中央にする
-        mapView.setUserTrackingMode(.follow, animated: true)
         
         achievementLabel.layer.cornerRadius = 10
         achievementLabel.clipsToBounds = true
@@ -112,29 +110,19 @@ class ViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
        
         // addAnnotationメソッドを使って追加することでピンで表示される
-
-        
-
-//
         guard let unwrapedStations = loadStationsArray() else {return}
             for station in unwrapedStations {
                 addAnnotation(latitude: station.latitude, longitude: station.longitude, title: station.name,isStamp: station.isStamp)
             }
         
-//        guard let unwrappedStationDict = loadStationsDictionary() else {return}
-//        stations2 = arrayFromDict(dictionary: unwrappedStationDict)
-//        for station in stations2 {
-//            addAnnotation(latitude: station.latitude, longitude: station.longitude, title: station.name, isStamp: station.isStamp)
-//        }
+
         
        
         
 
         let filterdArray = unwrapedStations.filter{$0.isStamp == true}
-//        let filterArray = stations2.filter{$0.isStamp == true}
         
         achievementLabel.text = "\(filterdArray.count) / \(unwrapedStations.count)"
-//        achievementLabel.text = "\(filterArray.count) / \(stations2.count)"
         
         print("ViewController.viewWillAppear")
         
@@ -149,33 +137,41 @@ class ViewController: UIViewController,
     //MARK: - デリゲートメソッド
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.last?.coordinate != nil {// 現在地が取得できたら
-//            self.locationButton.isHidden = true
             self.isUserLocation = true
         }
         
         self.userLocation = locations.last?.coordinate
         
-        
     }
     
     //位置情報が取得できなかった時の処理
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        self.locationButton.isHidden = false
         self.isUserLocation = false
     }
     
+    //方角取得
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        print("方角:".appendingFormat("%.2f", newHeading.magneticHeading))
+//        userPinView.transform = CGAffineTransform(rotationAngle: <#T##CGFloat#>)
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation { // annotationがMKUserLodation型なら
-            return nil
-        }
-      
-        let reuseID = "marker"
-       let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+        
+        if annotation is MKUserLocation {
+            let pin = mapView.view(for: annotation) ?? MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            pin.image = UIImage(named: "userPinImage.png")
+            userPinView = pin
+            return pin
+        }else {
+            let reuseID = "marker"
+            let marker = MKMarkerAnnotationView(annotation: annotation,
+                                                reuseIdentifier: reuseID)
 
-        if let anno = annotation as? CustomMKPointAnnotation{
-            marker.markerTintColor = anno.markerColor
+            if let anno = annotation as? CustomMKPointAnnotation{
+                marker.markerTintColor = anno.markerColor
+            }
+            return marker
         }
-        return marker
     }
     
     // ピンをタップした時の処理
@@ -208,7 +204,6 @@ class ViewController: UIViewController,
         
         detailVC.stationName = stationName!
         detailVC.stationLocation = location
-//        detailVC.roadStations = self.roadStations
         
         navigationController.modalPresentationStyle = .fullScreen
         navigationController.setNavigationBarHidden(false, animated: true)
@@ -265,7 +260,7 @@ class ViewController: UIViewController,
             
             
         }
-        let action2 = UIAlertAction(title: "衛星画像", style: .default) { action in
+        let action2 = UIAlertAction(title: "航空写真", style: .default) { action in
             print("ハイブリッド")
             // 非推奨
 //            self.mapView.mapType = MKMapType.hybrid

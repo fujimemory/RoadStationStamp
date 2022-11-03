@@ -18,6 +18,7 @@
 		C906210D28D3DA2700311C22 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906210C28D3DA2700311C22 /* CollectionViewController.swift */; };
 		C92F6C5928B8346600442630 /* stamp.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C92F6C5828B8346600442630 /* stamp.jpg */; };
 		C92F6C5C28BB452700442630 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92F6C5B28BB452700442630 /* WebViewController.swift */; };
+		C98C72002913F8DD008686CF /* userPinImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C98C71FF2913F8DD008686CF /* userPinImage.png */; };
 		C9C54AB028EE368300CA88FB /* RoadStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C54AAF28EE368300CA88FB /* RoadStations.swift */; };
 		C9C54AD228F6247D00CA88FB /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C54AD128F6247D00CA88FB /* Memory.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		C906210C28D3DA2700311C22 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		C92F6C5828B8346600442630 /* stamp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stamp.jpg; sourceTree = "<group>"; };
 		C92F6C5B28BB452700442630 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		C98C71FF2913F8DD008686CF /* userPinImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userPinImage.png; sourceTree = "<group>"; };
 		C9C54AAF28EE368300CA88FB /* RoadStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadStations.swift; sourceTree = "<group>"; };
 		C9C54AD128F6247D00CA88FB /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +109,7 @@
 		C92F6C5A28B8346F00442630 /* IMG */ = {
 			isa = PBXGroup;
 			children = (
+				C98C71FF2913F8DD008686CF /* userPinImage.png */,
 				C92F6C5828B8346600442630 /* stamp.jpg */,
 			);
 			path = IMG;
@@ -174,6 +177,7 @@
 				C92F6C5928B8346600442630 /* stamp.jpg in Resources */,
 				C905AA6B28B5829200F57E36 /* Assets.xcassets in Resources */,
 				C905AA6928B5828E00F57E36 /* Main.storyboard in Resources */,
+				C98C72002913F8DD008686CF /* userPinImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
