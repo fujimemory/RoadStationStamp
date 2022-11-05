@@ -151,8 +151,23 @@ class ViewController: UIViewController,
     
     //方角取得
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        print("方角:".appendingFormat("%.2f", newHeading.magneticHeading))
-//        userPinView.transform = CGAffineTransform(rotationAngle: <#T##CGFloat#>)
+        //ユーザの向きを格納する定数
+        let userHeading : CLLocationDirection = newHeading.magneticHeading
+        // 地図の回転角度を格納する定数
+        let mapHeading : CLLocationDirection = mapView.camera.heading
+        // ピンの角度を取得して格納する変数
+        var pinHeading : CLLocationDirection = 0
+        
+        if userHeading < mapHeading {
+            pinHeading = (userHeading + 360) - mapHeading
+        }else {
+            pinHeading = userHeading - mapHeading
+        }
+        if mapView.userTrackingMode != .followWithHeading {// トラッキングモードが.followWithHeadingではないとき
+            userPinView?.transform = CGAffineTransform(rotationAngle: pinHeading * Double.pi / 180)
+        }else {
+            userPinView?.transform = CGAffineTransform(rotationAngle: 0)
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -239,7 +254,19 @@ class ViewController: UIViewController,
         print("位置情報切り替えボタン")
             
         if self.isUserLocation {// 位置情報が取得できたらuserlocationを画面中央に表示する機能
-            mapView.setUserTrackingMode(.follow, animated: true)
+            switch mapView.userTrackingMode {
+            case .none :
+                locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+                mapView.setUserTrackingMode(.follow, animated: true)
+            case .follow :
+                locationButton.setImage(UIImage(systemName: "location.north.line.fill"), for: .normal)
+                mapView.setUserTrackingMode(.followWithHeading, animated: true)
+            default :
+                locationButton.setImage(UIImage(systemName: "location"), for: .normal)
+                mapView.setUserTrackingMode(.none, animated: true)
+            }
+            //MARK: UIButtonのイメージ切り替えうまくいかず
+            // スワイプでモード切り替えしたときにイメージを切り替えるにはどうしたらいいのか
         }else {// 位置情報が取得できなければアラートを介して設定アプリへの遷移
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         }
